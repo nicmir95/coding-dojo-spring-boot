@@ -1,5 +1,5 @@
 
-package com.assignment.spring.api;
+package com.assignment.spring.client.model;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,26 +26,26 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "cod"
 })
-public class WeatherResponse {
+public class WeatherResponseDto {
 
     @JsonProperty("coord")
-    private Coord coord;
+    private CoordDto coordDto;
     @JsonProperty("weather")
-    private List<Weather> weather = null;
+    private List<WeatherDto> weatherDtos = null;
     @JsonProperty("base")
     private String base;
     @JsonProperty("main")
-    private Main main;
+    private MainDto mainDto;
     @JsonProperty("visibility")
     private Integer visibility;
     @JsonProperty("wind")
-    private Wind wind;
+    private WindDto windDto;
     @JsonProperty("clouds")
-    private Clouds clouds;
+    private CloudsDto cloudsDto;
     @JsonProperty("dt")
     private Integer dt;
     @JsonProperty("sys")
-    private Sys sys;
+    private SysDto sysDto;
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
@@ -56,23 +56,23 @@ public class WeatherResponse {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("coord")
-    public Coord getCoord() {
-        return coord;
+    public CoordDto getCoord() {
+        return coordDto;
     }
 
     @JsonProperty("coord")
-    public void setCoord(Coord coord) {
-        this.coord = coord;
+    public void setCoord(CoordDto coordDto) {
+        this.coordDto = coordDto;
     }
 
     @JsonProperty("weather")
-    public List<Weather> getWeather() {
-        return weather;
+    public List<WeatherDto> getWeatherDtos() {
+        return weatherDtos;
     }
 
     @JsonProperty("weather")
-    public void setWeather(List<Weather> weather) {
-        this.weather = weather;
+    public void setWeatherDtos(List<WeatherDto> weatherDtos) {
+        this.weatherDtos = weatherDtos;
     }
 
     @JsonProperty("base")
@@ -86,13 +86,13 @@ public class WeatherResponse {
     }
 
     @JsonProperty("main")
-    public Main getMain() {
-        return main;
+    public MainDto getMain() {
+        return mainDto;
     }
 
     @JsonProperty("main")
-    public void setMain(Main main) {
-        this.main = main;
+    public void setMain(MainDto mainDto) {
+        this.mainDto = mainDto;
     }
 
     @JsonProperty("visibility")
@@ -106,23 +106,23 @@ public class WeatherResponse {
     }
 
     @JsonProperty("wind")
-    public Wind getWind() {
-        return wind;
+    public WindDto getWind() {
+        return windDto;
     }
 
     @JsonProperty("wind")
-    public void setWind(Wind wind) {
-        this.wind = wind;
+    public void setWind(WindDto windDto) {
+        this.windDto = windDto;
     }
 
     @JsonProperty("clouds")
-    public Clouds getClouds() {
-        return clouds;
+    public CloudsDto getClouds() {
+        return cloudsDto;
     }
 
     @JsonProperty("clouds")
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
+    public void setClouds(CloudsDto cloudsDto) {
+        this.cloudsDto = cloudsDto;
     }
 
     @JsonProperty("dt")
@@ -136,13 +136,13 @@ public class WeatherResponse {
     }
 
     @JsonProperty("sys")
-    public Sys getSys() {
-        return sys;
+    public SysDto getSys() {
+        return sysDto;
     }
 
     @JsonProperty("sys")
-    public void setSys(Sys sys) {
-        this.sys = sys;
+    public void setSys(SysDto sysDto) {
+        this.sysDto = sysDto;
     }
 
     @JsonProperty("id")

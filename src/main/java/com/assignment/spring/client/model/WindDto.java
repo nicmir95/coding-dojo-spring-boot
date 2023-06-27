@@ -1,5 +1,5 @@
 
-package com.assignment.spring.api;
+package com.assignment.spring.client.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "speed",
     "deg"
 })
-public class Wind {
+public class WindDto {
 
     @JsonProperty("speed")
     private Double speed;

@@ -1,5 +1,5 @@
 
-package com.assignment.spring.api;
+package com.assignment.spring.client.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "all"
 })
-public class Clouds {
+public class CloudsDto {
 
     @JsonProperty("all")
     private Integer all;
