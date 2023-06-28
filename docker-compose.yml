@@ -1,19 +1,23 @@
 version: '3'
 services:
-  app:
+  weathersnapshot:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - '8080:8080'
     depends_on:
-      - db
-
-  db:
+      - weatherdatabase
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://weatherdatabase:5432/weathersnapshot
+      - SPRING_DATASOURCE_USERNAME=nico
+      - SPRING_DATASOURCE_PASSWORD=leta
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  weatherdatabase:
     image: postgres
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=nico
       - POSTGRES_PASSWORD=leta
-      - POSTGRES_DB=weatherdatabase
+      - POSTGRES_DB=weathersnapshot

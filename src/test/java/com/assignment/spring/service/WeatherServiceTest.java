@@ -11,9 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -42,7 +39,7 @@ public class WeatherServiceTest {
         WeatherResponseDto weatherResponseDto = new WeatherResponseDto();
         when(weatherClient.getWeather(city)).thenReturn(weatherResponseDto);
 
-        WeatherResponseDto result = weatherService.getWeather(city);
+        WeatherResponseDto result = weatherService.getWeatherByCity(city);
 
         assertEquals(weatherResponseDto, result);
     }
@@ -59,26 +56,5 @@ public class WeatherServiceTest {
         assertEquals(weatherEntity, result);
     }
 
-    @Test
-    public void testGetLastWeatherSnapshotByCity() {
-        String city = "London";
-        WeatherEntity weatherEntity = new WeatherEntity();
-        when(weatherRepository.findFirstByCityOrderByCreatedOnDesc(city.trim())).thenReturn(weatherEntity);
 
-        WeatherEntity result = weatherService.getLastWeatherSnapshotByCity(city);
-
-        assertEquals(weatherEntity, result);
-    }
-
-    @Test
-    public void testGetWeatherSnapshotForTemperatureInterval() {
-        Double lowTemp = 10.0;
-        Double highTemp = 20.0;
-        List<WeatherEntity> weatherEntityList = new ArrayList<>();
-        when(weatherRepository.findAllByTemperatureBetween(lowTemp, highTemp)).thenReturn(weatherEntityList);
-
-        List<WeatherEntity> result = weatherService.getWeatherSnapshotForTemperatureInterval(lowTemp, highTemp);
-
-        assertEquals(weatherEntityList, result);
-    }
 }

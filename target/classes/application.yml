@@ -4,7 +4,7 @@ weatherService:
   baseUrl: "http://api.openweathermap.org/data/2.5/weather"
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/weatherdatabase
+    url: jdbc:postgresql://localhost:5432/weathersnapshot
     username: nico
     password: leta
     driver-class-name: org.postgresql.Driver
@@ -19,3 +19,6 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+pring:
+  jackson:
+    date-format: YYYY-MM-DD

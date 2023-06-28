@@ -7,12 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Builder
 @Data
 public class WeatherSnapshotResponse {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime createdOn;
 
     @JsonProperty("id")

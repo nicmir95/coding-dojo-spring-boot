@@ -22,7 +22,6 @@ public class WeatherClientImpl implements WeatherClient {
 
     private String baseUrl;
 
-    @Autowired
     public WeatherClientImpl(@Value("${weatherService.apikey}") String apikey, RestTemplate restTemplate, @Value("${weatherService.baseUrl}") String baseUrl) {
         this.apikey = apikey;
         this.restTemplate = restTemplate;
@@ -33,7 +32,8 @@ public class WeatherClientImpl implements WeatherClient {
     public WeatherResponseDto getWeather(String city) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", "application/json");
+        headers.set("Accept", "application/json;charset=utf-8");
+        headers.set("Content-Type", "application/json;charset=utf-8");
 
         String weatherURL = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .queryParam("q", "{q}")

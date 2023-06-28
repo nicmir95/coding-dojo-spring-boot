@@ -21,8 +21,6 @@ import lombok.Data;
     "sunrise",
     "sunset"
 })
-@Data
-@Builder
 public class SysDto {
 
     @JsonProperty("type")

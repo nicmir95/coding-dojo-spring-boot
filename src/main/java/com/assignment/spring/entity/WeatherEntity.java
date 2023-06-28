@@ -1,14 +1,11 @@
 package com.assignment.spring.entity;
 
 import lombok.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -20,7 +17,7 @@ public class WeatherEntity {
     private Integer id;
 
     @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdOn;
 
     @NotNull

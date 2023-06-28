@@ -20,8 +20,6 @@ import lombok.Data;
     "temp_min",
     "temp_max"
 })
-@Data
-@Builder
 public class MainDto {
 
     @JsonProperty("temp")

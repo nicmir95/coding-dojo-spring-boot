@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "873fdf20-d177-4b4a-b0a5-eb468ee1851d",
+		"name": "WeatherApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2664540"
+	},
+	"item": [
+		{
+			"name": "createSnapshot",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getSnapshotById",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getByCityAndDate",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

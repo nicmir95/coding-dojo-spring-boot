@@ -1,6 +1,7 @@
 package com.assignment.spring.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 
 import javax.validation.ConstraintViolationException;
@@ -25,6 +27,18 @@ public class GlobalExceptionHandler {
             MissingServletRequestParameterException e) {
         String parameterName = e.getParameterName();
         String errorMessage = "Required parameter '" + parameterName + "' is missing.";
+
+        ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
+        log.error(errorMessage, e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ApiError> handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException e) {
+        String parameterName = e.getParameter().getParameterName();
+        String errorMessage = "Failed to parse '" + parameterName + "' to " + e.getRequiredType();
 
         ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
         log.error(errorMessage, e);
@@ -72,6 +86,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiError(HttpStatus.NOT_FOUND, e.getMessage()));
     }
 
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ApiError> handleInvalidDataAccessApiUsageException(
+            InvalidDataAccessApiUsageException e) {
+        String errorMessage = "Parameter value did not match expected type";
+        ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
+        log.error(errorMessage, e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
 
     @ExceptionHandler (ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -27,7 +27,6 @@ import lombok.Data;
     "name",
     "cod"
 })
-@Data
 public class WeatherResponseDto {
 
     @JsonProperty("coord")
