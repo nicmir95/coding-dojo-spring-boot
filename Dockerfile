@@ -4,7 +4,7 @@ VOLUME /tmp
 RUN apt-get update && \
     apt-get install -y postgresql-client
 
-ENV DB_HOST localhost
+ENV DB_HOST 192.168.65.0/24
 ENV DB_PORT 5432
 ENV DB_NAME weatherdatabase
 ENV DB_USERNAME nico

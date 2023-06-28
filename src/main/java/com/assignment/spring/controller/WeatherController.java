@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@Validated
 @Slf4j
+@Validated
 public class WeatherController {
 
     private WeatherService weatherService;
@@ -52,7 +52,7 @@ public class WeatherController {
     }
 
     @GetMapping(value = "/weather/{city}", produces = "application/json")
-    public WeatherSnapshotResponse getWeatherSnapshot(@NotBlank @Pattern(regexp = "[A-Za-z]") @PathVariable("city") String city) {
+    public WeatherSnapshotResponse getWeatherSnapshot(@PathVariable("city") @NotBlank String city) {
         log.info("Retrieving weather information for {}", city);
 
         WeatherEntity weatherEntity = weatherService.getLastWeatherSnapshotByCity(city);

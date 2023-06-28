@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "cod"
 })
+@Data
 public class WeatherResponseDto {
 
     @JsonProperty("coord")
