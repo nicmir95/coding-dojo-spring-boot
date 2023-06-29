@@ -5,6 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +20,7 @@ public class WeatherEntity {
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime createdOn;
+    private Timestamp createdOn;
 
     @NotNull
     private String city;
@@ -30,7 +32,7 @@ public class WeatherEntity {
     private Double temperature;
 
     public WeatherEntity() {
-        createdOn = LocalDateTime.now();
+        createdOn = Timestamp.from(Instant.now());
     }
 
 }

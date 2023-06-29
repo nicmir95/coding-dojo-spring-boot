@@ -1,6 +1,7 @@
 
 package com.assignment.spring.client.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -21,7 +22,8 @@ import lombok.Data;
     "sunrise",
     "sunset"
 })
-public class SysDto {
+@Data
+public class SysDto implements Serializable {
 
     @JsonProperty("type")
     private Integer type;

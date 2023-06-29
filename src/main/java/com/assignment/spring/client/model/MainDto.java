@@ -1,6 +1,7 @@
 
 package com.assignment.spring.client.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -13,14 +14,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "temp",
-    "pressure",
-    "humidity",
-    "temp_min",
-    "temp_max"
-})
-public class MainDto {
+@Data
+public class MainDto implements Serializable {
 
     @JsonProperty("temp")
     private Double temp;

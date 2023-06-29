@@ -28,9 +28,8 @@ public class GlobalExceptionHandler {
         String parameterName = e.getParameterName();
         String errorMessage = "Required parameter '" + parameterName + "' is missing.";
 
-        ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, e);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -39,28 +38,24 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException e) {
         String parameterName = e.getParameter().getParameterName();
         String errorMessage = "Failed to parse '" + parameterName + "' to " + e.getRequiredType();
-
-        ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, e);
     }
 
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiError> handleRuntimeException(RuntimeException e) {
         String errorMessage = "An unexpected error occurred.";
-        ApiError errorResponse = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage);
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, e);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiError> handleException(Exception e) {
         String errorMessage = "An error occurred: " + e.getMessage();
-        ApiError errorResponse = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage);
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, e);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -68,7 +63,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleException(MethodArgumentNotValidException e) {
         String errorMessage = "Validation for this field has failed: " + e.getParameter();
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(HttpStatus.BAD_REQUEST, errorMessage));
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, e);
     }
 
     @ExceptionHandler(RestClientException.class)
@@ -76,14 +71,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleRuntimeException(RestClientException e) {
         String errorMessage = "Error occurred while making a REST API call: " + e.getMessage();
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, e);
     }
 
     @ExceptionHandler(HttpClientErrorException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ApiError> handleClientNotFoundException(HttpClientErrorException e) {
-        log.error("Error when connecting to OpenWeather API", e);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiError(HttpStatus.NOT_FOUND, e.getMessage()));
+        String errorMessage = "Error when connecting to OpenWeather API";
+        log.error(errorMessage , e.getStackTrace());
+        return buildErrorResponse(HttpStatus.NOT_FOUND, errorMessage, e);
     }
 
     @ExceptionHandler(InvalidDataAccessApiUsageException.class)
@@ -91,10 +87,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleInvalidDataAccessApiUsageException(
             InvalidDataAccessApiUsageException e) {
         String errorMessage = "Parameter value did not match expected type";
-        ApiError errorResponse = new ApiError(HttpStatus.BAD_REQUEST, errorMessage);
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, e);    }
 
     @ExceptionHandler (ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -102,6 +96,12 @@ public class GlobalExceptionHandler {
             ConstraintViolationException e) {
         String errorMessage = "Invalid data for fields : " + e.getConstraintViolations();
         log.error(errorMessage, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(HttpStatus.BAD_REQUEST, errorMessage));
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, e);
+    }
+
+    private ResponseEntity<ApiError> buildErrorResponse(HttpStatus status, String errorMessage, Exception e) {
+        ApiError errorResponse = new ApiError(status, errorMessage);
+        log.error(errorMessage, e);
+        return ResponseEntity.status(status).body(errorResponse);
     }
 }

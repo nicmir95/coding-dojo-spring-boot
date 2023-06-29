@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -14,13 +15,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
@@ -40,12 +40,12 @@ class GlobalExceptionHandlerTest {
     }
     @Test
     public void handleClientNotFoundException_ShouldReturnNotFound() {
-        HttpClientErrorException exception = mock(HttpClientErrorException.class);
+        HttpClientErrorException exception = new HttpClientErrorException(HttpStatus.NOT_FOUND, "Error when connecting to OpenWeather API");
 
         ResponseEntity<ApiError> responseEntity = globalExceptionHandler.handleClientNotFoundException(exception);
 
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertEquals(exception.getMessage(), responseEntity.getBody().getMessage());
+        assertEquals("Error when connecting to OpenWeather API", responseEntity.getBody().getMessage());
     }
     @Test
     public void testHandleMissingServletRequestParameterException() {
@@ -93,8 +93,6 @@ class GlobalExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals("Invalid data for fields : " + violations, responseEntity.getBody().getMessage());
     }
-
-
     @Test
     public void handleException_ShouldReturnInternalServerError() {
         Exception exception = mock(Exception.class);

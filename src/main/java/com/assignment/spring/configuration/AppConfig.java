@@ -44,8 +44,8 @@ public class AppConfig {
         typeMap.addMappings(mapper -> {
             mapper.map(src -> src.getName(), WeatherEntity::setCity);
             mapper.map(src -> src.getId(),   WeatherEntity::setId);
-            mapper.map(src -> src.getSys().getCountry(), WeatherEntity::setCountry);
-            mapper.map(src -> src.getMain().getTemp(), WeatherEntity::setTemperature);
+            mapper.map(src -> src.getSysDto().getCountry(), WeatherEntity::setCountry);
+            mapper.map(src -> src.getMainDto().getTemp(), WeatherEntity::setTemperature);
         });
         return modelMapper;
     }

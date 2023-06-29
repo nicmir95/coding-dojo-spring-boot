@@ -8,9 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,7 +41,7 @@ public class WeatherService {
     }
     public WeatherEntity getWeatherSnapshotByCityAndDate(String city, LocalDateTime date) {
         List<WeatherEntity> list = weatherRepository.findAll() ;
-        return weatherRepository.findAllByCityAndCreatedOnContaining(city, date);
+        return weatherRepository.findAllByCityAndCreatedOnContaining(city, Timestamp.valueOf(date));
     }
 
 
