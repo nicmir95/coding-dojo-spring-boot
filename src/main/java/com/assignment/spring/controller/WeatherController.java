@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Validated
 public class WeatherController {
 
-    private WeatherService weatherService;
+    final private WeatherService weatherService;
 
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
@@ -47,8 +47,8 @@ public class WeatherController {
     @GetMapping(value = "/weather", produces = "application/json")
     public WeatherSnapshotResponse getWeatherSnapshotByCityAndDate(
             @RequestParam("city") @NotNull String city,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam("date") @NotNull LocalDateTime date) {
-        log.info("Retrieving weather snapshot for city {} for date", city, date);
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("date") @NotNull LocalDateTime date) {
+        log.info("Retrieving weather snapshot for city {} for date {}", city, date);
         WeatherEntity weatherEntity = weatherService.getWeatherSnapshotByCityAndDate(city, date);
 
         return WeatherSnapshotResponse.builder().city(weatherEntity.getCity()).id(weatherEntity.getId()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).createdOn(weatherEntity.getCreatedOn().toLocalDateTime()).build();

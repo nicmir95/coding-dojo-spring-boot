@@ -9,5 +9,5 @@ import java.sql.Timestamp;
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherEntity, Integer> {
 
-    WeatherEntity findAllByCityAndCreatedOnContaining(String city, Timestamp date);
+    WeatherEntity findByCityAndCreatedOnContaining(String city, Timestamp date);
 }

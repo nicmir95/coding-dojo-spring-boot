@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -40,8 +39,7 @@ public class WeatherService {
         return weatherRepository.save(weather);
     }
     public WeatherEntity getWeatherSnapshotByCityAndDate(String city, LocalDateTime date) {
-        List<WeatherEntity> list = weatherRepository.findAll() ;
-        return weatherRepository.findAllByCityAndCreatedOnContaining(city, Timestamp.valueOf(date));
+        return weatherRepository.findByCityAndCreatedOnContaining(city, Timestamp.valueOf(date));
     }
 
 

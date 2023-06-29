@@ -22,7 +22,7 @@ public class WeatherEntity {
     private Integer id;
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Timestamp createdOn;
 
     @NotNull
