@@ -1,7 +1,6 @@
 package com.assignment.spring.client;
 
 import com.assignment.spring.client.model.WeatherResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

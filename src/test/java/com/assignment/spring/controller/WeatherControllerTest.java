@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -44,17 +45,17 @@ public class WeatherControllerTest {
         responseDto.setName("London");
         MainDto mainDto = new MainDto();
         mainDto.setTemp(20.5);
-        responseDto.setMain(mainDto);
+        responseDto.setMainDto(mainDto);
         SysDto sysDto = new SysDto();
         sysDto.setCountry("UK");
-        responseDto.setSys(sysDto);
+        responseDto.setSysDto(sysDto);
 
         WeatherEntity weatherEntity = new WeatherEntity();
         weatherEntity.setId(1);
         weatherEntity.setCountry("UK");
         weatherEntity.setCity("London");
         weatherEntity.setTemperature(20.5);
-        weatherEntity.setCreatedOn(LocalDateTime.now());
+        weatherEntity.setCreatedOn(Timestamp.valueOf(LocalDateTime.now()));
 
         when(weatherService.getWeatherByCity("London")).thenReturn(responseDto);
         when(weatherService.saveWeather(any(WeatherResponseDto.class))).thenReturn(weatherEntity);
@@ -87,7 +88,7 @@ public class WeatherControllerTest {
         weatherEntity.setId(1);
         weatherEntity.setCity("London");
         weatherEntity.setTemperature(20.5);
-        weatherEntity.setCreatedOn(LocalDateTime.now());
+        weatherEntity.setCreatedOn(Timestamp.valueOf(LocalDateTime.now()));
 
         when(weatherService.getWeatherSnapshotById(id)).thenReturn(weatherEntity);
 

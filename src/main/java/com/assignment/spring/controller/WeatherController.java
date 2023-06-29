@@ -5,7 +5,6 @@ import com.assignment.spring.entity.WeatherEntity;
 import com.assignment.spring.model.WeatherSnapshotRequest;
 import com.assignment.spring.model.WeatherSnapshotResponse;
 import com.assignment.spring.service.WeatherService;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @RestController
 @Slf4j
