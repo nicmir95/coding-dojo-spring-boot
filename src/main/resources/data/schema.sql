@@ -3,5 +3,5 @@ CREATE TABLE weather (
     createdOn TIMESTAMP(150) WITHOUT TIME ZONE NOT NULL,
     city VARCHAR(255) NOT NULL,
     country VARCHAR(255) NOT NULL,
-    temperature NUMERIC(5, 2)
+    temperature NUMERIC(5, 2) NOT NULL
 );

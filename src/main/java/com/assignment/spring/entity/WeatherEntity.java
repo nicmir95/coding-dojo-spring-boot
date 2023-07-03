@@ -1,7 +1,6 @@
 package com.assignment.spring.entity;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Entity;
@@ -9,8 +8,8 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Data
@@ -22,8 +21,7 @@ public class WeatherEntity {
     private Integer id;
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp createdOn;
+    private LocalDateTime createdOn;
 
     @NotNull
     private String city;
@@ -35,7 +33,6 @@ public class WeatherEntity {
     private Double temperature;
 
     public WeatherEntity() {
-        createdOn = Timestamp.from(Instant.now());
+        createdOn = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
-
 }

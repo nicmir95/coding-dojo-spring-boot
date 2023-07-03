@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -30,7 +30,8 @@ public class WeatherService {
     }
 
     public WeatherEntity getWeatherSnapshotById(Integer id) {
-        return weatherRepository.findById(id).get();
+        Optional<WeatherEntity> optionalWeatherEntity = weatherRepository.findById(id);
+        return optionalWeatherEntity.isPresent() ? optionalWeatherEntity.get() : null;
     }
     public WeatherEntity saveWeather(WeatherResponseDto weatherResponseDto) {
         log.info("Saving weather information for {}", weatherResponseDto.getName());
@@ -39,7 +40,7 @@ public class WeatherService {
         return weatherRepository.save(weather);
     }
     public WeatherEntity getWeatherSnapshotByCityAndDate(String city, LocalDateTime date) {
-        return weatherRepository.findByCityAndCreatedOnContaining(city, Timestamp.valueOf(date));
+        return weatherRepository.findByCityAndCreatedOn(city, date);
     }
 
 

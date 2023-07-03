@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+import static java.util.Objects.isNull;
+
 @RestController
 @Slf4j
 @Validated
@@ -32,7 +34,7 @@ public class WeatherController {
         WeatherResponseDto weatherResponseDto = weatherService.getWeatherByCity(weatherSnapshotRequest.getCity());
         WeatherEntity weatherEntity = weatherService.saveWeather(weatherResponseDto);
 
-        return WeatherSnapshotResponse.builder().id(weatherEntity.getId()).createdOn(weatherEntity.getCreatedOn().toLocalDateTime()).city(weatherEntity.getCity()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).build();
+        return WeatherSnapshotResponse.builder().id(weatherEntity.getId()).createdOn(weatherEntity.getCreatedOn()).city(weatherEntity.getCity()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).build();
     }
 
     @GetMapping(value = "/weather/{id}", produces = "application/json")
@@ -41,17 +43,17 @@ public class WeatherController {
 
         WeatherEntity weatherEntity = weatherService.getWeatherSnapshotById(id);
 
-        return WeatherSnapshotResponse.builder().city(weatherEntity.getCity()).id(weatherEntity.getId()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).createdOn(weatherEntity.getCreatedOn().toLocalDateTime()).build();
+        return !isNull(weatherEntity) ? WeatherSnapshotResponse.builder().city(weatherEntity.getCity()).id(weatherEntity.getId()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).createdOn(weatherEntity.getCreatedOn()).build() : null;
     }
 
     @GetMapping(value = "/weather", produces = "application/json")
-    public WeatherSnapshotResponse getWeatherSnapshotByCityAndDate(
+    public WeatherSnapshotResponse getWeatherSnapshotByCityAndDate(@Valid
             @RequestParam("city") @NotNull String city,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("date") @NotNull LocalDateTime date) {
+            @Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam("date") @NotNull LocalDateTime date) {
         log.info("Retrieving weather snapshot for city {} for date {}", city, date);
         WeatherEntity weatherEntity = weatherService.getWeatherSnapshotByCityAndDate(city, date);
 
-        return WeatherSnapshotResponse.builder().city(weatherEntity.getCity()).id(weatherEntity.getId()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).createdOn(weatherEntity.getCreatedOn().toLocalDateTime()).build();
+        return !isNull(weatherEntity) ? WeatherSnapshotResponse.builder().city(weatherEntity.getCity()).id(weatherEntity.getId()).country(weatherEntity.getCountry()).temperature(weatherEntity.getTemperature()).createdOn(weatherEntity.getCreatedOn()).build() : null;
     }
 
 }

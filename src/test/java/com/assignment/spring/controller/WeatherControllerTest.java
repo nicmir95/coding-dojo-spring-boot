@@ -55,7 +55,7 @@ public class WeatherControllerTest {
         weatherEntity.setCountry("UK");
         weatherEntity.setCity("London");
         weatherEntity.setTemperature(20.5);
-        weatherEntity.setCreatedOn(Timestamp.valueOf(LocalDateTime.now()));
+        weatherEntity.setCreatedOn(LocalDateTime.now());
 
         when(weatherService.getWeatherByCity("London")).thenReturn(responseDto);
         when(weatherService.saveWeather(any(WeatherResponseDto.class))).thenReturn(weatherEntity);
@@ -88,7 +88,7 @@ public class WeatherControllerTest {
         weatherEntity.setId(1);
         weatherEntity.setCity("London");
         weatherEntity.setTemperature(20.5);
-        weatherEntity.setCreatedOn(Timestamp.valueOf(LocalDateTime.now()));
+        weatherEntity.setCreatedOn(LocalDateTime.now());
 
         when(weatherService.getWeatherSnapshotById(id)).thenReturn(weatherEntity);
 
