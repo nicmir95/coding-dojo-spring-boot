@@ -39,16 +39,4 @@ Manual testing can be performed using Postman.
 
 `WeatherApp.postman_collection.json` can be imported into Postman to make requests to the app.
 
-For unit tests, open Docker Desktop, search postgresql image and pull.
-
-Create/Run container with params:
- POSTGRES_USER=nico 
- POSTGRES_PASSWORD=leta 
- POSTGRES_DB=weathersnapshot
- Host: 5432
-
-Tests are located in `src/test/java/com/assignment/spring`
-
-### Improvements
-
-Use testconteiners framework for testing instead of using mocks.
+Tests are located in package `src/test/java/com/assignment/spring`
